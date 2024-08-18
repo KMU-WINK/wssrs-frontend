@@ -10,7 +10,7 @@ export const AuthContentArea = styled(FlexCenter)`
   width: 90%;
   max-width: 700px;
   height: 700px;
-  gap: 40px;
+  gap: 30px;
   border-radius: 50px;
   background-color: var(--background-color);
   box-sizing: border-box;
