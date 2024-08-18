@@ -28,9 +28,7 @@ export const FormArea = styled(FlexColumn)`
   gap: 30px;
 `;
 
-export const FileInputArea = styled(FlexAlignCenter)`
-  overflow-x: auto;
-`;
+export const FileInputArea = styled(FlexAlignCenter)``;
 
 export const ImagePreviewArea = styled(Flex)`
   flex-wrap: nowrap;
@@ -84,7 +82,7 @@ export const Textarea = styled.textarea`
   border: none;
   outline: none;
   resize: none;
-  height: 200px;
+  height: 300px;
 `;
 
 export const SubmitButton = styled(FlexCenter)`

@@ -64,22 +64,20 @@ export default function ApplyPage() {
   const checkBoxOptions = [
     {
       value: true,
-      checked: formData.isUnion === true,
       label: '예',
     },
     {
       value: false,
-      checked: formData.isUnion === false,
       label: '아니오',
     },
   ];
 
-  const onChange = (e) => {
+  const onChangeInput = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const onCheckboxChange = (e) => {
+  const onChangeDays = (e) => {
     const { value, checked } = e.target;
     setFormData((prevFormData) => {
       if (checked) {
@@ -96,8 +94,9 @@ export default function ApplyPage() {
     });
   };
 
-  const onUnionChange = (e) => {
-    setFormData({ ...formData, isUnion: e.target.value === '예' });
+  const onChangeUnion = (e) => {
+    const { value } = e.target;
+    setFormData({ ...formData, isUnion: value === 'true' });
   };
 
   useEffect(() => {
@@ -164,7 +163,7 @@ export default function ApplyPage() {
                   title={field.title}
                   name={field.name}
                   value={field.value}
-                  onChange={onChange}
+                  onChange={onChangeInput}
                   placeholder={field.placeholder}
                 />
               ))}
@@ -176,7 +175,7 @@ export default function ApplyPage() {
                       key={day}
                       value={day}
                       checked={formData.day.includes(day)}
-                      onChange={onCheckboxChange}
+                      onChange={onChangeDays}
                       label={day}
                     />
                   ))}
@@ -189,8 +188,8 @@ export default function ApplyPage() {
                     <ApplyCheckBox
                       key={index}
                       value={option.value}
-                      checked={option.checked}
-                      onChange={onUnionChange}
+                      checked={formData.isUnion === option.value}
+                      onChange={onChangeUnion}
                       label={option.label}
                     />
                   ))}
