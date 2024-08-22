@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { refreshToken as refreshTokenAPI } from './Auth';
-import { getCookie } from '../util/cookies';
+import { getCookie } from '../util/Cookies';
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 

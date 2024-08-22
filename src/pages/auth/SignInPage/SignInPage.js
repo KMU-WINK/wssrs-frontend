@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../../api/Auth';
 import { useCookies } from 'react-cookie';
 import { useSetRecoilState } from 'recoil';
+import { expiresInHours } from '../../../util/Cookies';
 import AuthInput from '../../../components/Input/AuthInput';
 import LargeBlueButton from '../../../components/Button/LargeBlueButton';
 import userState from '../../../recoil/userState';
@@ -55,8 +56,12 @@ export default function SignInPage() {
 
     try {
       const response = await login(formData);
-      setCookie('accessToken', response.accessToken);
-      setCookie('refreshToken', response.refreshToken);
+      setCookie('accessToken', response.accessToken, {
+        expires: expiresInHours(12),
+      });
+      setCookie('refreshToken', response.refreshToken, {
+        expires: expiresInHours(24),
+      });
       setUser({
         studentId: response.studentId,
         userName: response.username,
