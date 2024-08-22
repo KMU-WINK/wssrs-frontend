@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { getNotice } from '../../../api/User.js';
 import Header from '../../../components/Common/Header.js';
 import Footer from '../../../components/Common/Footer.js';
@@ -22,7 +21,6 @@ import {
 export default function PostDetailPage() {
   const navigate = useNavigate();
   const { noticeId } = useParams();
-  const [cookies] = useCookies(['accessToken', 'freshToken']);
   const [notice, setNotice] = useState({
     id: 0,
     title: '',
@@ -73,7 +71,7 @@ export default function PostDetailPage() {
 
   return (
     <Container>
-      <Header isLog={!!cookies.accessToken} />
+      <Header />
       <ContentArea>
         <Category />
         <Menu>

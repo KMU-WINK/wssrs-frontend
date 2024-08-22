@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { getAllNotices, deleteNotice } from '../../../api/Admin.js';
 import { FormatDate } from '../../../util/FormatDate.js';
 import Header from '../../../components/Common/Header.js';
@@ -17,7 +16,6 @@ import {
 
 export default function RecruitManagePage() {
   const navigate = useNavigate();
-  const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const [notices, setNotices] = useState([]);
   const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -146,7 +144,7 @@ export default function RecruitManagePage() {
 
   return (
     <Container>
-      <Header isLog={!!cookies.accessToken} />
+      <Header />
       <ContentArea>
         <Title>Administration</Title>
         <ButtonArea>

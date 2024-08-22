@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { getNotice, confirmRecruit } from '../../../api/Admin.js';
 import { transformDays } from '../../../util/TransFormDays.js';
 import Header from '../../../components/Common/Header.js';
@@ -23,7 +22,6 @@ export default function RecruitDetailPage() {
   const { noticeId } = useParams();
   const location = useLocation();
   const { formattedDate } = location.state || {};
-  const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const [notice, setNotices] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showCheckboxes, setShowCheckboxes] = useState(false);
@@ -130,7 +128,7 @@ export default function RecruitDetailPage() {
 
   return (
     <Container>
-      <Header isLog={!!cookies.accessToken} />
+      <Header />
       <ContentArea>
         <TitleArea>
           <Wrapper>

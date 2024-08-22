@@ -52,7 +52,7 @@ export default function MainPage() {
 
   return (
     <Container>
-      <Header isLog={!!cookies.accessToken} />
+      <Header />
       <ContentArea>
         {notices.map((notice) => (
           <RecruitPoster

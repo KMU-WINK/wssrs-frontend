@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { getNotice, recruitNotice } from '../../../api/User.js';
 import Header from '../../../components/Common/Header.js';
 import Footer from '../../../components/Common/Footer.js';
@@ -29,7 +28,6 @@ import {
 export default function ApplyPage() {
   const navigate = useNavigate();
   const { noticeId } = useParams();
-  const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const [showModal, setShowModal] = useState(false);
   const [notice, setNotice] = useState({
     id: 0,
@@ -144,7 +142,7 @@ export default function ApplyPage() {
 
   return (
     <Container>
-      <Header isLog={!!cookies.accessToken} />
+      <Header />
       <ContentArea>
         <Category />
         <Menu>

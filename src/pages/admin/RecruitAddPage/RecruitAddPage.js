@@ -1,6 +1,5 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { createNotice } from '../../../api/Admin.js';
 import Header from '../../../components/Common/Header.js';
 import Footer from '../../../components/Common/Footer.js';
@@ -27,7 +26,6 @@ import {
 
 export default function RecruitAddPage() {
   const navigate = useNavigate();
-  const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const [files, setFiles] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -65,7 +63,7 @@ export default function RecruitAddPage() {
 
   return (
     <Container>
-      <Header isLog={!!cookies.accessToken} />
+      <Header />
       <ContentArea>
         <TitleArea>
           <BackArrow />
