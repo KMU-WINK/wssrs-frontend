@@ -1,8 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import {
-  logout as apiLogout,
-  refreshToken as apiRefreshToken,
-} from '../../api/Auth';
+import { logout } from '../../api/Auth';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -12,7 +9,6 @@ import LanguageSelector from '../../util/LanguageSelector';
 import loginIcon from '../../assets/header/loginIcon.svg';
 import logoutIcon from '../../assets/header/logoutIcon.svg';
 import userState from '../../recoil/userState';
-import { jwtDecode } from 'jwt-decode';
 
 function Header() {
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -24,54 +20,6 @@ function Header() {
   const setUserInfo = useSetRecoilState(userState);
   const [language, setLanguage] = useState('ko');
   const [isLog, setIsLog] = useState(false);
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const accessToken = cookies.accessToken;
-
-      if (accessToken) {
-        try {
-          const decodedToken = jwtDecode(accessToken);
-          const currentTime = Date.now() / 1000; // 현재 시간을 초 단위로
-
-          if (decodedToken.exp > currentTime) {
-            setIsLog(true); // accessToken이 유효하다면 로그인 상태
-          } else {
-            // 액세스 토큰이 만료된 경우
-            const refreshToken = cookies.refreshToken;
-            if (refreshToken) {
-              try {
-                // 서버에 리프레시 토큰을 사용하여 새 액세스 토큰을 요청
-                await refreshAccessToken(refreshToken);
-                setIsLog(true); // 새 액세스 토큰 발급 성공
-              } catch (error) {
-                // 리프레시 토큰이 만료되었거나 문제가 발생한 경우
-                handleLogout();
-              }
-            } else {
-              handleLogout();
-            }
-          }
-        } catch (error) {
-          handleLogout(); // 토큰 디코딩 실패 시 로그아웃 처리
-        }
-      } else {
-        setIsLog(false); // 액세스 토큰이 없으면 로그아웃 처리
-      }
-    };
-
-    checkLoginStatus();
-  }, [cookies.accessToken, cookies.refreshToken]);
-
-  const refreshAccessToken = async (refreshToken) => {
-    try {
-      const data = await apiRefreshToken(refreshToken);
-      setCookie('accessToken', data.accessToken, { path: '/' });
-    } catch (error) {
-      console.error('Failed to refresh access token:', error);
-      handleLogout();
-    }
-  };
 
   const handleLogout = () => {
     removeCookie('accessToken');
@@ -103,6 +51,22 @@ function Header() {
 
   const transLanguage = translations[language];
 
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const accessToken = cookies.accessToken;
+
+      if (accessToken) {
+        // 액세스 토큰이 존재하는 경우
+        setIsLog(true);
+      } else {
+        // 액세스 토큰이 존재하지 않는 경우
+        setIsLog(false);
+      }
+    };
+
+    checkLoginStatus();
+  }, [cookies.accessToken]);
+
   const onClickLogIcon = async () => {
     if (isLog) {
       const accessToken = cookies.accessToken;
@@ -110,7 +74,7 @@ function Header() {
       if (!accessToken || !refreshToken) return;
 
       try {
-        await apiLogout(accessToken);
+        await logout(accessToken);
         handleLogout();
       } catch (error) {
         alert('로그아웃에 실패했습니다.');

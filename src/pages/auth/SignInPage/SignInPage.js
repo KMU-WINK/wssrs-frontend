@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../../api/Auth';
 import { useCookies } from 'react-cookie';
 import { useSetRecoilState } from 'recoil';
-import { expiresInHours } from '../../../util/Cookies';
+import { expiresInHours } from '../../../util/cookies';
 import AuthInput from '../../../components/Input/AuthInput';
 import LargeBlueButton from '../../../components/Button/LargeBlueButton';
 import userState from '../../../recoil/userState';
@@ -20,7 +20,7 @@ export default function SignInPage() {
     email: '',
     password: '',
   });
-  const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
+  const [setCookie] = useCookies(['accessToken', 'refreshToken']);
   const setUser = useSetRecoilState(userState);
   const navigate = useNavigate();
 
