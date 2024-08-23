@@ -20,7 +20,7 @@ export default function SignInPage() {
     email: '',
     password: '',
   });
-  const [setCookie] = useCookies(['accessToken', 'refreshToken']);
+  const [cookies, setCookie] = useCookies(['accessToken', 'refreshToken']);
   const setUser = useSetRecoilState(userState);
   const navigate = useNavigate();
 
