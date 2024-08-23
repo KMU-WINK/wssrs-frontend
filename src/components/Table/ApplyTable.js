@@ -13,25 +13,40 @@ const ApplyTable = ({ columns, data }) => {
     <TableContainer>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
-          ))}
+          {headerGroups.map((headerGroup) => {
+            const { key, ...rest } = headerGroup.getHeaderGroupProps();
+            return (
+              <tr key={key} {...rest}>
+                {headerGroup.headers.map((column) => {
+                  const { key, ...rest } = column.getHeaderProps();
+                  return (
+                    <th key={key} {...rest}>
+                      {column.render('Header')}
+                    </th>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </thead>
         <tbody {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row);
+            const { key, ...rest } = row.getRowProps(); // key를 직접 전달
             return (
               <tr
-                {...row.getRowProps()}
+                key={key} // key를 직접 전달
+                {...rest}
                 className={row.original.isConfirmed ? 'confirmed' : ''}
               >
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
+                {row.cells.map((cell) => {
+                  const { key, ...rest } = cell.getCellProps(); // key를 직접 전달
+                  return (
+                    <td key={key} {...rest}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
               </tr>
             );
           })}
