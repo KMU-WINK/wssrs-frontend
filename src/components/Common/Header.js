@@ -30,6 +30,7 @@ function Header() {
       email: '',
       isAuthenticated: false,
     });
+    setIsLog(false);
     navigate('/sign-in');
   };
 
@@ -54,18 +55,21 @@ function Header() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       const accessToken = cookies.accessToken;
+      const refreshToken = cookies.refreshToken;
 
       if (accessToken) {
-        // 액세스 토큰이 존재하는 경우
         setIsLog(true);
       } else {
-        // 액세스 토큰이 존재하지 않는 경우
         setIsLog(false);
+      }
+
+      if (!refreshToken) {
+        handleLogout();
       }
     };
 
     checkLoginStatus();
-  }, [cookies.accessToken]);
+  }, [cookies.accessToken, cookies.refreshToken]);
 
   const onClickLogIcon = async () => {
     if (isLog) {

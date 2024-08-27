@@ -28,9 +28,44 @@ export default function SignUpPage() {
 
   const validateForm = () => {
     const { studentId, password, username, email } = formData;
-    if (!studentId || !password || !username || !email) {
-      return '모든 필드를 채워주세요.';
+
+    // 학번: 8자리 숫자만
+    const studentIdRegex = /^\d{8}$/;
+    if (!studentId) {
+      return '학번을 입력해주세요.';
     }
+    if (!studentIdRegex.test(studentId)) {
+      return '학번은 8자리 숫자여야 합니다.';
+    }
+
+    // 이메일: 이메일 형식 맞추기
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      return '이메일을 입력해주세요.';
+    }
+    if (!emailRegex.test(email)) {
+      return '유효한 이메일 주소를 입력해주세요.';
+    }
+
+    // 이름: 영문자와 한글만
+    const usernameRegex = /^[a-zA-Z가-힣]+$/;
+    if (!username) {
+      return '이름을 입력해주세요.';
+    }
+    if (!usernameRegex.test(username)) {
+      return '이름은 영문자와 한글만 포함할 수 있습니다.';
+    }
+
+    // 비밀번호: 영어, 특수문자, 숫자 포함 8자 이상
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/;
+    if (!password) {
+      return '비밀번호를 입력해주세요.';
+    }
+    if (!passwordRegex.test(password)) {
+      return '비밀번호는 영어, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.';
+    }
+
     return null;
   };
 

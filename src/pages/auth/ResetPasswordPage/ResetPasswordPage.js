@@ -39,9 +39,22 @@ export default function ResetPasswordPage() {
 
   const validateForm = () => {
     const { newPassword, rePassword } = formData;
-    if (!newPassword || !rePassword) {
-      return '모든 필드를 채워주세요.';
+
+    // 비밀번호: 영어, 특수문자, 숫자 포함 8자 이상
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/;
+    if (!newPassword) {
+      return '비밀번호를 입력해주세요.';
     }
+    if (!passwordRegex.test(newPassword)) {
+      return '비밀번호는 영어, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.';
+    }
+
+    // 재비밀번호
+    if (!rePassword) {
+      return '재비밀번호를 입력해주세요.';
+    }
+
     return null;
   };
 

@@ -14,14 +14,23 @@ function AuthInput({ name, value, onChange, placeholder }) {
     }
   };
 
+  const getInputType = (name) => {
+    switch (name) {
+      case 'password':
+      case 'rePassword':
+      case 'newPassword':
+        return 'password';
+      case 'email':
+        return 'email';
+      default:
+        return 'text';
+    }
+  };
+
   return (
     <Container>
       <Input
-        type={
-          name === 'password' || name === 'rePassword' || name === 'newPassword'
-            ? 'password'
-            : 'text'
-        }
+        type={getInputType(name)}
         name={name}
         value={value}
         onChange={onChange}

@@ -131,6 +131,34 @@ export default function ApplyPage() {
   }, [noticeId]);
 
   const onClickSubmit = async () => {
+    // 근무 코드 유효성 검사
+    if (!formData.code.trim()) {
+      alert('지원코드를 입력해주세요.');
+      return;
+    }
+
+    // 전화번호: 01x-xxxx-xxxx or 01x-xxx-xxxx
+    const phoneRegex = /^01[016789]-\d{3,4}-\d{4}$/;
+    if (!formData.phoneNum.trim()) {
+      alert('연락처를 입력해주세요.');
+      return;
+    }
+    if (!phoneRegex.test(formData.phoneNum)) {
+      return '전화번호는 01x-xxxx-xxxx 또는 01x-xxx-xxxx 형식이어야 합니다.';
+    }
+
+    // 희망 요일 유효성 검사
+    if (formData.day.length === 0) {
+      alert('희망 요일을 선택해주세요.');
+      return;
+    }
+
+    // 조합원 가입 유무 유효성 검사
+    if (formData.isUnion === null) {
+      alert('조합원 가입 유무를 선택해주세요.');
+      return;
+    }
+
     try {
       await recruitNotice(noticeId, formData);
       setShowModal(true);

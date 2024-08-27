@@ -31,9 +31,14 @@ export default function PasswordFindPage() {
 
   const validateForm = () => {
     const { email, studentId } = formData;
-    if (!email || !studentId) {
-      return '모든 필드를 채워주세요.';
+
+    if (!studentId) {
+      return '학번을 입력해주세요.';
     }
+    if (!email) {
+      return '이메일을 입력해주세요.';
+    }
+
     return null;
   };
 
