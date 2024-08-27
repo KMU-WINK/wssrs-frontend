@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexCenter, FlexEnd } from './Flex.styles';
+import { FlexCenter, FlexColumn, FlexEnd } from './Flex.styles';
 
 export const AuthContainer = styled(FlexCenter)`
   min-height: 100vh;
@@ -14,7 +14,12 @@ export const AuthContentArea = styled(FlexCenter)`
   border-radius: 50px;
   background-color: var(--background-color);
   box-sizing: border-box;
-  box-shadow: 4px 4px 30px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 30px 0px rgba(0, 0, 0, 0.25);4
+`;
+
+export const AuthInputArea = styled(FlexColumn)`
+  width: 100%;
+  gap: ${(props) => props.gap};
 `;
 
 export const AuthText = styled.div`

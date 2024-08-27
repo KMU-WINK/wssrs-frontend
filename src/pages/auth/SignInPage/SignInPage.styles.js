@@ -3,12 +3,15 @@ import { FlexCenter } from '../../../components/Styles/Flex.styles';
 import {
   AuthContainer,
   AuthContentArea,
+  AuthInputArea,
   AuthText,
 } from '../../../components/Styles/Auth.styles';
 
 export const Container = styled(AuthContainer)``;
 
 export const ContentArea = styled(AuthContentArea)``;
+
+export const InputArea = styled(AuthInputArea)``;
 
 export const UserAuthArea = styled(FlexCenter)`
   gap: 10px;

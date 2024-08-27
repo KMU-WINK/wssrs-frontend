@@ -13,6 +13,7 @@ import {
   UserAuthArea,
   Text,
   UserAuth,
+  InputArea,
 } from './SignInPage.styles';
 
 export default function SignInPage() {
@@ -25,8 +26,12 @@ export default function SignInPage() {
   const navigate = useNavigate();
 
   const inputFields = [
-    { name: 'email', placeholder: '이메일을 입력해주세요.' },
-    { name: 'password', placeholder: '비밀번호를 입력해주세요.' },
+    { label: '이메일', name: 'email', placeholder: '이메일을 입력해주세요.' },
+    {
+      label: '비밀번호',
+      name: 'password',
+      placeholder: '비밀번호를 입력해주세요.',
+    },
   ];
 
   const userAuthItems = [
@@ -112,15 +117,18 @@ export default function SignInPage() {
     <Container>
       <ContentArea>
         <Text>Log In</Text>
-        {inputFields.map((field, index) => (
-          <AuthInput
-            key={index}
-            name={field.name}
-            value={formData[field.name]}
-            onChange={onInputChange}
-            placeholder={field.placeholder}
-          />
-        ))}
+        <InputArea gap="10px">
+          {inputFields.map((field, index) => (
+            <AuthInput
+              key={index}
+              label={field.label}
+              name={field.name}
+              value={formData[field.name]}
+              onChange={onInputChange}
+              placeholder={field.placeholder}
+            />
+          ))}
+        </InputArea>
         <UserAuthArea>
           {userAuthItems.map(({ text, path }, index) => (
             <UserAuth key={index} onClick={() => navigate(path)}>

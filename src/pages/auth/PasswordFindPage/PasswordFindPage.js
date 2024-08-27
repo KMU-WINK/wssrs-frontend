@@ -20,8 +20,8 @@ export default function PasswordFindPage() {
   const navigate = useNavigate();
 
   const inputFields = [
-    { name: 'studentId', placeholder: '학번을 입력해주세요.' },
-    { name: 'email', placeholder: '이메일을 입력해주세요.' },
+    { label: '학번', name: 'studentId', placeholder: '학번을 입력해주세요.' },
+    { label: '이메일', name: 'email', placeholder: '이메일을 입력해주세요.' },
   ];
 
   const onInputChange = (e) => {
@@ -90,10 +90,11 @@ export default function PasswordFindPage() {
       <ContentArea>
         <Text>비밀번호 찾기</Text>
         <InputArea gap="5px">
-          <InputArea gap="40px">
+          <InputArea gap="10px">
             {inputFields.map((field) => (
               <AuthInput
                 key={field.name}
+                label={field.label}
                 name={field.name}
                 value={formData[field.name]}
                 onChange={onInputChange}

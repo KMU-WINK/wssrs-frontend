@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-function AuthInput({ name, value, onChange, placeholder }) {
+function AuthInput({ label, name, value, onChange, placeholder }) {
   const [isFocused, setIsFocused] = useState(false);
 
   const onFocus = () => {
@@ -17,8 +17,8 @@ function AuthInput({ name, value, onChange, placeholder }) {
   const getInputType = (name) => {
     switch (name) {
       case 'password':
-      case 'rePassword':
       case 'newPassword':
+      case 'rePassword':
         return 'password';
       case 'email':
         return 'email';
@@ -29,6 +29,7 @@ function AuthInput({ name, value, onChange, placeholder }) {
 
   return (
     <Container>
+      <Text>{label}</Text>
       <Input
         type={getInputType(name)}
         name={name}
@@ -42,17 +43,30 @@ function AuthInput({ name, value, onChange, placeholder }) {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  max-width: 345px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
+const Text = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+  font-size: var(--font-size-lm);
+  color: var(--color-gray-500);
+  font-weight: var(--font-weight-medium);
+`;
 
 const Input = styled.input`
   height: 50px;
-  padding: 10px 100px;
+  width: 100%;
+  padding: 20px 10px;
   font-size: var(--font-size-lm);
-  text-align: center;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 15px;
   border: 1px solid var(--color-blue);
-  border-left-width: 7px;
+  border-left-width: 5px;
 `;
 
 export default AuthInput;

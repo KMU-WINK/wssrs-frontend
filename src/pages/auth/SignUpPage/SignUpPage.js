@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../../api/Auth';
 import AuthInput from '../../../components/Input/AuthInput';
 import LargeBlueButton from '../../../components/Button/LargeBlueButton';
-import { Container, ContentArea, Text } from './SignUpPage.styles';
+import { Container, ContentArea, Text, InputArea } from './SignUpPage.styles';
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -15,10 +15,18 @@ export default function SignUpPage() {
   const navigate = useNavigate();
 
   const inputFields = [
-    { name: 'studentId', placeholder: '학번을 입력해주세요.' },
-    { name: 'email', placeholder: '이메일을 입력해주세요.' },
-    { name: 'username', placeholder: '이름을 입력해주세요.' },
-    { name: 'password', placeholder: '비밀번호를 입력해주세요.' },
+    {
+      label: '학번',
+      name: 'studentId',
+      placeholder: '8자리 숫자를 입력해주세요.',
+    },
+    { label: '이메일', name: 'email', placeholder: '이메일을 입력해주세요.' },
+    { label: '이름', name: 'username', placeholder: '이름을 입력해주세요.' },
+    {
+      label: '비밀번호',
+      name: 'password',
+      placeholder: '영어, 숫자, 특수문자 포함 8자 이상',
+    },
   ];
 
   const onInputChange = (e) => {
@@ -115,15 +123,18 @@ export default function SignUpPage() {
     <Container>
       <ContentArea>
         <Text>Sign Up</Text>
-        {inputFields.map((field, index) => (
-          <AuthInput
-            key={index}
-            name={field.name}
-            value={formData[field.name]}
-            onChange={onInputChange}
-            placeholder={field.placeholder}
-          />
-        ))}
+        <InputArea gap="10px">
+          {inputFields.map((field, index) => (
+            <AuthInput
+              key={index}
+              label={field.label}
+              name={field.name}
+              value={formData[field.name]}
+              onChange={onInputChange}
+              placeholder={field.placeholder}
+            />
+          ))}
+        </InputArea>
         <LargeBlueButton onClick={onClickSignUpButton} title={'회원가입'} />
       </ContentArea>
     </Container>

@@ -28,8 +28,16 @@ export default function ResetPasswordPage() {
   ];
 
   const inputFields = [
-    { name: 'newPassword', placeholder: '비밀번호를 입력해주세요.' },
-    { name: 'rePassword', placeholder: '다시 입력해주세요.' },
+    {
+      label: '새 비밀번호',
+      name: 'newPassword',
+      placeholder: '영어, 숫자, 특수문자 포함 8자 이상',
+    },
+    {
+      label: '비밀번호 재입력',
+      name: 'rePassword',
+      placeholder: '재입력 입력해주세요.',
+    },
   ];
 
   const onInputChange = (e) => {
@@ -114,10 +122,11 @@ export default function ResetPasswordPage() {
           ))}
         </TextArea>
         <InputArea gap="5px">
-          <InputArea gap="40px">
+          <InputArea gap="10px">
             {inputFields.map((field, index) => (
               <AuthInput
                 key={index}
+                label={field.label}
                 name={field.name}
                 value={formData[field.name]}
                 onChange={onInputChange}

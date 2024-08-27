@@ -1,19 +1,17 @@
 import styled from 'styled-components';
-import { FlexColumn } from '../../../components/Styles/Flex.styles';
 import {
   AuthContainer,
   AuthContentArea,
   AuthText,
   AuthAlert,
+  AuthInputArea,
 } from '../../../components/Styles/Auth.styles';
 
 export const Container = styled(AuthContainer)``;
 
 export const ContentArea = styled(AuthContentArea)``;
 
-export const InputArea = styled(FlexColumn)`
-  gap: ${(props) => props.gap};
-`;
+export const InputArea = styled(AuthInputArea)``;
 
 export const Text = styled(AuthText)`
   font-size: var(--font-size-xxl);
