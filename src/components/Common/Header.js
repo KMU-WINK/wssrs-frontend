@@ -20,20 +20,6 @@ function Header() {
   const setUserInfo = useSetRecoilState(userState);
   const [language, setLanguage] = useState('ko');
   const [isLog, setIsLog] = useState(false);
-
-  const handleLogout = () => {
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-    setUserInfo({
-      studentId: '',
-      userName: '',
-      email: '',
-      isAuthenticated: false,
-    });
-    setIsLog(false);
-    navigate('/sign-in');
-  };
-
   const onClickLanguageChange = (lang) => {
     setLanguage(lang);
   };
@@ -52,34 +38,42 @@ function Header() {
 
   const transLanguage = translations[language];
 
+  const handleLogout = () => {
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+    setUserInfo({
+      studentId: '',
+      userName: '',
+      email: '',
+      isAuthenticated: false,
+    });
+    setIsLog(false);
+  };
+
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const accessToken = cookies.accessToken;
-      const refreshToken = cookies.refreshToken;
-
-      if (accessToken) {
+      if (cookies.accessToken) {
         setIsLog(true);
       } else {
         setIsLog(false);
       }
-
-      if (!refreshToken) {
-        handleLogout();
-      }
     };
 
     checkLoginStatus();
-  }, [cookies.accessToken, cookies.refreshToken]);
+  }, [cookies.accessToken]);
+
+  useEffect(() => {
+    if (!cookies.refreshToken && isLog) {
+      handleLogout();
+    }
+  }, [cookies.refreshToken]);
 
   const onClickLogIcon = async () => {
     if (isLog) {
-      const accessToken = cookies.accessToken;
-      const refreshToken = cookies.refreshToken;
-      if (!accessToken || !refreshToken) return;
-
       try {
-        await logout(accessToken);
+        await logout(cookies.accessToken);
         handleLogout();
+        navigate('/sign-in');
       } catch (error) {
         alert('로그아웃에 실패했습니다.');
         console.error('로그아웃 에러', error);

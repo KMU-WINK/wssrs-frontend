@@ -1,11 +1,13 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import { getNotice } from '../../../api/User.js';
 import Header from '../../../components/Common/Header.js';
 import Footer from '../../../components/Common/Footer.js';
 import Category from '../../../components/Post/Category.js';
 import ListButton from '../../../components/Button/ListButton.js';
 import PostTitle from '../../../components/Post/PostTitle.js';
+import LoginModal from '../../../components/Modal.js';
 import {
   Container,
   ContentArea,
@@ -16,10 +18,13 @@ import {
   Post,
   ApplyButton,
   Text,
+  Backdrop,
 } from './PostDetailPage.styles.js';
 
 export default function PostDetailPage() {
+  const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   const { noticeId } = useParams();
   const [notice, setNotice] = useState({
     id: 0,
@@ -27,6 +32,22 @@ export default function PostDetailPage() {
     content: '',
     files: [],
   });
+
+  const onClickApplyButton = (noticeId) => {
+    if (!cookies.accessToken) {
+      setShowModal(true);
+    } else {
+      navigate(`/apply/${noticeId}`);
+    }
+  };
+
+  const onClickListButton = () => {
+    if (!cookies.accessToken) {
+      setShowModal(true);
+    } else {
+      navigate('/');
+    }
+  };
 
   useEffect(() => {
     const fetchNotice = async () => {
@@ -75,7 +96,7 @@ export default function PostDetailPage() {
       <ContentArea>
         <Category />
         <Menu>
-          <ListButton onClick={() => navigate('/')} />
+          <ListButton onClick={onClickListButton} />
         </Menu>
         <PostArea>
           {notice.files.length > 0 && (
@@ -84,13 +105,24 @@ export default function PostDetailPage() {
           <PostTextArea>
             <PostTitle title={notice.title} />
             <TextArea value={notice.content} readOnly />
-            <ApplyButton onClick={() => navigate(`/apply/${noticeId}`)}>
+            <ApplyButton onClick={onClickApplyButton}>
               <Text>지원하기</Text>
             </ApplyButton>
           </PostTextArea>
         </PostArea>
       </ContentArea>
       <Footer />
+      {showModal && (
+        <>
+          <Backdrop onClick={() => setShowModal(false)} />
+          <LoginModal
+            onClose={() => setShowModal(false)}
+            text={'로그인이 필요합니다.'}
+            title={'로그인하기'}
+            nav={'/sign-in'}
+          />
+        </>
+      )}
     </Container>
   );
 }

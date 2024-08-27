@@ -7,6 +7,7 @@ import {
   UserPostArea,
   UserMenu,
   UserPost,
+  UserBackdrop,
 } from '../../../components/Styles/User.styles';
 
 export const Container = styled(UserContainer)``;
@@ -20,6 +21,8 @@ export const PostArea = styled(UserPostArea)``;
 export const Menu = styled(UserMenu)``;
 
 export const Post = styled(UserPost)``;
+
+export const Backdrop = styled(UserBackdrop)``;
 
 export const TextArea = styled.textarea`
   width: 100%;

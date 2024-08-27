@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import { getNotice, recruitNotice } from '../../../api/User.js';
 import Header from '../../../components/Common/Header.js';
 import Footer from '../../../components/Common/Footer.js';
@@ -9,6 +10,7 @@ import PostTitle from '../../../components/Post/PostTitle.js';
 import ApplyInput from '../../../components/Input/ApplyInput.js';
 import ApplyCheckBox from '../../../components/Input/ApplyCheckBox.js';
 import Category from '../../../components/Post/Category.js';
+import LoginModal from '../../../components/Modal.js';
 import SubmitModal from '../../../components/Modal.js';
 import {
   Container,
@@ -26,9 +28,11 @@ import {
 } from './ApplyPage.styles.js';
 
 export default function ApplyPage() {
+  const [cookies] = useCookies(['accessToken', 'refreshToken']);
   const navigate = useNavigate();
   const { noticeId } = useParams();
   const [showModal, setShowModal] = useState(false);
+  const [showLogModal, setShowLogModal] = useState(false);
   const [notice, setNotice] = useState({
     id: 0,
     title: '',
@@ -130,7 +134,20 @@ export default function ApplyPage() {
     fetchNotice();
   }, [noticeId]);
 
+  const onClickListButton = () => {
+    if (!cookies.accessToken) {
+      setShowLogModal(true);
+    } else {
+      navigate('/');
+    }
+  };
+
   const onClickSubmit = async () => {
+    if (!cookies.accessToken) {
+      setShowLogModal(true);
+      return;
+    }
+
     // 근무 코드 유효성 검사
     if (!formData.code.trim()) {
       alert('지원코드를 입력해주세요.');
@@ -174,7 +191,7 @@ export default function ApplyPage() {
       <ContentArea>
         <Category />
         <Menu>
-          <ListButton onClick={() => navigate('/')} />
+          <ListButton onClick={onClickListButton} />
         </Menu>
         <PostArea>
           {notice.files.length > 0 && (
@@ -227,6 +244,17 @@ export default function ApplyPage() {
         </PostArea>
       </ContentArea>
       <Footer />
+      {showLogModal && (
+        <>
+          <Backdrop onClick={() => setShowLogModal(false)} />
+          <LoginModal
+            onClose={() => setShowLogModal(false)}
+            text={'로그인이 필요합니다.'}
+            title={'로그인하기'}
+            nav={'/sign-in'}
+          />
+        </>
+      )}
       {showModal && (
         <>
           <Backdrop onClick={() => setShowModal(false)} />
