@@ -100,19 +100,24 @@ export default function RecruitDetailPage() {
     {
       Header: '번호',
       accessor: 'recruitId',
-      Cell: ({ row }) => (
-        <div>
-          {showCheckboxes ? (
-            <input
-              type="checkbox"
-              checked={selectedRows.includes(row.original.recruitId)}
-              onChange={() => onChangeCheckBox(row.original.recruitId)}
-            />
-          ) : (
-            row.original.recruitId
-          )}
-        </div>
-      ),
+      Cell: ({ row }) => {
+        const index = row.index; // 현재 행의 인덱스
+        const displayNumber = (currentPage - 1) * itemsPerPage + index + 1; // 오름차순 번호 계산
+
+        return (
+          <div>
+            {showCheckboxes ? (
+              <input
+                type="checkbox"
+                checked={selectedRows.includes(row.original.recruitId)}
+                onChange={() => onChangeCheckBox(row.original.recruitId)}
+              />
+            ) : (
+              displayNumber
+            )}
+          </div>
+        );
+      },
     },
     { Header: '이름', accessor: 'username' },
     { Header: '학번', accessor: 'studentId' },
