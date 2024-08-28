@@ -76,7 +76,10 @@ export default function SignInPage() {
         email: formData.email,
         isAuthenticated: true,
       });
-      if (formData.email === 'admin' && formData.password === 'admin12!@') {
+      if (
+        formData.email === 'admin@kookmin.ac.kr' &&
+        formData.password === 'admin12!@'
+      ) {
         navigate('/recruit-manage');
       } else {
         navigate('/');
