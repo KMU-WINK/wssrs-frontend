@@ -18,7 +18,7 @@ const ProtectedRoute = ({ element, adminOnly }) => {
   if (!isAuthenticated) {
     return <Navigate to="/sign-in" />;
   }
-  if (adminOnly && email !== 'admin') {
+  if (adminOnly && email !== 'admin@kookmin.ac.kr') {
     return <Navigate to="/" />;
   }
   return element;
