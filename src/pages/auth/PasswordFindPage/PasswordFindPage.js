@@ -89,8 +89,8 @@ export default function PasswordFindPage() {
     <Container>
       <ContentArea>
         <Text>비밀번호 찾기</Text>
-        <InputArea gap="5px">
-          <InputArea gap="10px">
+        <InputArea $gap="5px">
+          <InputArea $gap="10px">
             {inputFields.map((field) => (
               <AuthInput
                 key={field.name}

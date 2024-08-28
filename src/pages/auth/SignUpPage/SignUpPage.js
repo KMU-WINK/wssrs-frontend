@@ -123,7 +123,7 @@ export default function SignUpPage() {
     <Container>
       <ContentArea>
         <Text>Sign Up</Text>
-        <InputArea gap="10px">
+        <InputArea $gap="10px">
           {inputFields.map((field, index) => (
             <AuthInput
               key={index}

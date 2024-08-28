@@ -19,7 +19,7 @@ export const AuthContentArea = styled(FlexCenter)`
 
 export const AuthInputArea = styled(FlexColumn)`
   width: 100%;
-  gap: ${(props) => props.gap};
+  gap: ${(props) => props.$gap};
 `;
 
 export const AuthText = styled.div`

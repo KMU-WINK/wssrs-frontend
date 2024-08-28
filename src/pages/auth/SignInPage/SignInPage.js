@@ -120,7 +120,7 @@ export default function SignInPage() {
     <Container>
       <ContentArea>
         <Text>Log In</Text>
-        <InputArea gap="10px">
+        <InputArea $gap="10px">
           {inputFields.map((field, index) => (
             <AuthInput
               key={index}

@@ -121,8 +121,8 @@ export default function ResetPasswordPage() {
             </Text>
           ))}
         </TextArea>
-        <InputArea gap="5px">
-          <InputArea gap="10px">
+        <InputArea $gap="5px">
+          <InputArea $gap="10px">
             {inputFields.map((field, index) => (
               <AuthInput
                 key={index}
