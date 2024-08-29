@@ -96,7 +96,7 @@ export default function PostDetailPage() {
       <ContentArea>
         <Category />
         <Menu>
-          <ListButton onClick={onClickListButton} />
+          <ListButton onClick={() => onClickListButton()} />
         </Menu>
         <PostArea>
           {notice.files.length > 0 && (
@@ -105,7 +105,7 @@ export default function PostDetailPage() {
           <PostTextArea>
             <PostTitle title={notice.title} />
             <TextArea value={notice.content} readOnly />
-            <ApplyButton onClick={onClickApplyButton}>
+            <ApplyButton onClick={() => onClickApplyButton(noticeId)}>
               <Text>지원하기</Text>
             </ApplyButton>
           </PostTextArea>

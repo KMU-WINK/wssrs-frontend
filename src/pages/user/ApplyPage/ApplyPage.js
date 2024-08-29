@@ -191,7 +191,7 @@ export default function ApplyPage() {
       <ContentArea>
         <Category />
         <Menu>
-          <ListButton onClick={onClickListButton} />
+          <ListButton onClick={() => onClickListButton()} />
         </Menu>
         <PostArea>
           {notice.files.length > 0 && (
@@ -239,7 +239,10 @@ export default function ApplyPage() {
                 </CheckboxArea>
               </UnionArea>
             </FormArea>
-            <MediumBlueButton title={'제출하기'} onClick={onClickSubmit} />
+            <MediumBlueButton
+              title={'제출하기'}
+              onClick={() => onClickSubmit()}
+            />
           </PostTextArea>
         </PostArea>
       </ContentArea>
