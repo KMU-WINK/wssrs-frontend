@@ -149,8 +149,15 @@ export default function ApplyPage() {
     }
 
     // 근무 코드 유효성 검사
+    const codeRegex = /^[a-zA-Z][0-9]+(-[0-9]+)?$/;
     if (!formData.code.trim()) {
       alert('지원코드를 입력해주세요.');
+      return;
+    }
+    if (!codeRegex.test(formData.code)) {
+      alert(
+        '근무 코드는 첫 글자는 알파벳, 두 번째는 숫자이며, 하이픈(-)이 있을 경우 반드시 그 뒤에 숫자가 와야 합니다.',
+      );
       return;
     }
 
