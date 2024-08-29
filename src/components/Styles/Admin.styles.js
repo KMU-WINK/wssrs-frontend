@@ -27,3 +27,10 @@ export const AdminTitle = styled(FlexStart)`
   font-size: var(--font-size-xxl);
   font-weight: var(--font-weight-bold);
 `;
+
+export const AdminSpanText = styled(FlexEnd)`
+  align-items: center;
+  margin: 0px 14px 14px 14px;
+  font-size: var(--font-size-md);
+  color: var(--color-gray-500);
+`;

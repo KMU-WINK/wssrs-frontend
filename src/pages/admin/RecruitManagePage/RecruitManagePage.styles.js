@@ -4,6 +4,7 @@ import {
   AdminContentArea,
   AdminButtonArea,
   AdminTitle,
+  AdminSpanText,
 } from '../../../components/Styles/Admin.styles';
 
 export const Container = styled(AdminContainer)``;
@@ -15,3 +16,5 @@ export const ButtonArea = styled(AdminButtonArea)``;
 export const Title = styled(AdminTitle)`
   margin-top: 62px;
 `;
+
+export const SpanText = styled(AdminSpanText)``;

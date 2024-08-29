@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import {
-  FlexEnd,
-  FlexAlignCenter,
-} from '../../../components/Styles/Flex.styles';
+import { FlexAlignCenter } from '../../../components/Styles/Flex.styles';
 import {
   AdminContainer,
   AdminContentArea,
   AdminTitleArea,
   AdminButtonArea,
+  AdminSpanText,
 } from '../../../components/Styles/Admin.styles';
 
 export const Container = styled(AdminContainer)``;
@@ -28,9 +26,4 @@ export const GrayText = styled.div`
   font-weight: var(--font-weight-bold);
 `;
 
-export const SpanText = styled(FlexEnd)`
-  align-items: center;
-  margin: 0px 14px 14px 14px;
-  font-size: var(--font-size-md);
-  color: var(--color-gray-500);
-`;
+export const SpanText = styled(AdminSpanText)``;

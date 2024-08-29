@@ -156,7 +156,6 @@ export default function RecruitDetailPage() {
         </ButtonArea>
         <ApplyTable columns={columns} data={currentData} />
         <PagingArrow
-          pageName="Detail"
           onChangePage={onChangePage}
           currentPage={currentPage}
           totalPages={totalPages}

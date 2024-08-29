@@ -3,19 +3,18 @@ import styled from 'styled-components';
 import LeftArrow from '../../assets/post/LeftArrow.svg';
 import RightArrow from '../../assets/post/RightArrow.svg';
 
-function PagingArrow({ pageName, onChangePage, currentPage, totalPages }) {
+function PagingArrow({ onChangePage, currentPage, totalPages }) {
   const getArrows = () => {
-    const isManagePage = pageName === 'Manage';
     return [
       {
         src: LeftArrow,
         onClick: () => onChangePage('prev'),
-        disabled: isManagePage ? currentPage === 0 : currentPage === 1,
+        disabled: currentPage === 1,
       },
       {
         src: RightArrow,
         onClick: () => onChangePage('next'),
-        disabled: isManagePage ? totalPages < 8 : currentPage === totalPages,
+        disabled: currentPage >= totalPages,
       },
     ];
   };
@@ -27,7 +26,7 @@ function PagingArrow({ pageName, onChangePage, currentPage, totalPages }) {
         <ArrowIcon
           key={index}
           src={arrow.src}
-          onClick={arrow.onClick}
+          onClick={arrow.disabled ? null : arrow.onClick}
           disabled={arrow.disabled}
         />
       ))}

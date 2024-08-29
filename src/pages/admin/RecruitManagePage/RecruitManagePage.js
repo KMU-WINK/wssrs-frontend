@@ -12,14 +12,18 @@ import {
   ContentArea,
   ButtonArea,
   Title,
+  SpanText,
 } from './RecruitManagePage.styles.js';
 
 export default function RecruitManagePage() {
   const navigate = useNavigate();
   const [notices, setNotices] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [pageNum, setPageNum] = useState(0);
+  const currentPage = pageNum + 1;
+  const totalPages = Math.ceil(totalCount / 8);
 
   const buttonConfig = [
     {
@@ -41,7 +45,8 @@ export default function RecruitManagePage() {
     const fetchNotices = async () => {
       try {
         const response = await getAllNotices(pageNum);
-        setNotices(response);
+        setNotices(response.notices);
+        setTotalCount(response.totalCount);
       } catch (error) {
         if (error.response) {
           switch (error.response.status) {
@@ -83,7 +88,8 @@ export default function RecruitManagePage() {
           setSelectedRows([]);
           setShowCheckboxes(false);
           const response = await getAllNotices(pageNum);
-          setNotices(response);
+          setNotices(response.notices);
+          setTotalCount(response.totalCount);
         } catch (error) {
           alert('삭제에 실패했습니다. 다시 시도해주세요.');
         }
@@ -106,9 +112,9 @@ export default function RecruitManagePage() {
 
   const onChangePage = (direction) => {
     setPageNum((prevPage) => {
-      if (direction === 'next') {
+      if (direction === 'next' && prevPage < totalPages - 1) {
         return prevPage + 1;
-      } else if (direction === 'prev' && prevPage > 1) {
+      } else if (direction === 'prev' && prevPage > 0) {
         return prevPage - 1;
       } else {
         return prevPage;
@@ -120,19 +126,23 @@ export default function RecruitManagePage() {
     {
       Header: '번호',
       accessor: 'id',
-      Cell: ({ row }) => (
-        <div>
-          {showCheckboxes ? (
-            <input
-              type="checkbox"
-              checked={selectedRows.includes(row.original.id)}
-              onChange={() => onChangeCheckBox(row.original.id)}
-            />
-          ) : (
-            row.original.id
-          )}
-        </div>
-      ),
+      Cell: ({ row }) => {
+        const currentPageFirstNumber = totalCount - pageNum * 8;
+        const rowNumber = currentPageFirstNumber - row.index; // 내림차순 계산
+        return (
+          <div>
+            {showCheckboxes ? (
+              <input
+                type="checkbox"
+                checked={selectedRows.includes(row.original.id)}
+                onChange={() => onChangeCheckBox(row.original.id)}
+              />
+            ) : (
+              rowNumber
+            )}
+          </div>
+        );
+      },
     },
     { Header: '제목', accessor: 'title' },
     {
@@ -168,11 +178,11 @@ export default function RecruitManagePage() {
           onClick={onClickRowPost}
         />
         <PagingArrow
-          pageName="Manage"
           onChangePage={onChangePage}
-          currentPage={pageNum}
-          totalPages={notices.length}
+          currentPage={currentPage}
+          totalPages={totalPages}
         />
+        <SpanText>{`Page ${currentPage} of ${totalPages}`}</SpanText>
       </ContentArea>
       <Footer />
     </Container>
